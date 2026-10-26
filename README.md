@@ -2,7 +2,11 @@
 
 Game survival 3D untuk browser mobile, dibuat tanpa dependensi atau aset eksternal. Pertahankan arena dari lima gelombang drone. Kumpulkan kredit dan beli upgrade. Seluruh model dibuat secara prosedural menggunakan WebGL 2.
 
-## Mainkan
+## Mainkan di HP
+
+[Buka Neon Outpost](https://ferdiptr177.github.io/neon-outpost-mobile/) lalu ketuk **MULAI MISI**. Gunakan tombol **MOD** untuk mengaktifkan God mode dan unlimited money. Keduanya bisa dimatikan kapan saja. Posisi landscape disarankan. Browser harus mendukung WebGL 2.
+
+## Jalankan secara lokal
 
 Jalankan dari direktori proyek:
 
@@ -34,7 +38,7 @@ Buka `http://localhost:8080`. Untuk HP dalam Wi-Fi yang sama, buka alamat IP kom
 3. Jalankan workflow **Publish Neon Outpost** atau push perubahan ke `main`.
 4. Buka tautan hasil deployment di HP. Dari menu browser, gunakan **Tambahkan ke Layar Utama** bila tersedia.
 
-Alur deployment mengikuti fitur GitHub Actions/Pages; pilihan atau izin pada akun Anda dapat berbeda. File workflow disediakan dan belum dijalankan pada akun pengguna. Jika workflow tidak diunggah, situs statis ini juga bisa dipublikasikan dengan opsi **Deploy from a branch**, branch `main`, folder `/ (root)`.
+Alur deployment mengikuti fitur GitHub Actions/Pages; pilihan atau izin pada akun Anda dapat berbeda. Workflow proyek ini sudah berhasil dijalankan dan game sudah diterbitkan di GitHub Pages. Jika workflow tidak diunggah, situs statis ini juga bisa dipublikasikan dengan opsi **Deploy from a branch**, branch `main`, folder `/ (root)`.
 
 ## Offline dan penyimpanan
 

@@ -17,7 +17,7 @@
 
 ## Batas verifikasi
 
-Belum diuji pada HP fisik Android/iPhone. Tes browser dengan GPU perangkat lunak bukan tolok ukur FPS atau daya tahan baterai. Safari, pemasangan PWA lewat menu browser, distribusi APK, dan deployment GitHub Pages belum diuji. Proyek ini bukan APK. Tidak ada klaim fotorealisme atau FPS tertentu.
+Belum diuji pada HP fisik Android/iPhone. Tes browser dengan GPU perangkat lunak bukan tolok ukur FPS atau daya tahan baterai. Safari, pemasangan PWA lewat menu browser, dan distribusi APK belum diuji. Proyek ini bukan APK. Tidak ada klaim fotorealisme atau FPS tertentu.
 
 ## Ulangi pemeriksaan
 
@@ -26,3 +26,7 @@ node --test tests/*.test.mjs
 ```
 
 Tes browser: jalankan server lokal sesuai README, lalu `node tests/browser.cjs`. Diperlukan Playwright dan Chromium. Variabel `CHROMIUM_PATH` opsional dapat menunjuk executable Chromium yang sudah ada. Tangkapan layar QA ditulis ke direktori temporer, bukan ke paket distribusi.
+
+## Publikasi GitHub Pages
+
+Repository `ferdiptr177/neon-outpost-mobile` telah diisi dengan 14 berkas proyek, dan seluruh SHA blob cocok dengan berkas lokal. GitHub Actions berhasil menerbitkan situs di https://ferdiptr177.github.io/neon-outpost-mobile/. Halaman publik berhasil dimuat. Browser pemeriksaan cloud tidak mendukung WebGL 2, sehingga pemeriksaan gameplay pada URL publik tidak dapat dilakukan di browser tersebut. Pemeriksaan renderer dan alur bermain sebelumnya dilakukan pada Chromium lokal dengan SwiftShader. Belum ada pengujian HP fisik.
