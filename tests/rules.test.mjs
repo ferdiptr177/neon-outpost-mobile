@@ -1,0 +1,13 @@
+import {test} from 'node:test';
+import assert from 'node:assert/strict';
+import fs from 'node:fs';
+import vm from 'node:vm';
+const html=fs.readFileSync(new URL('../index.html',import.meta.url),'utf8');
+const context=vm.createContext({});
+vm.runInContext(html.match(/<script id="game-core">([\s\S]*?)<\/script>/)[1]+'\nglobalThis.rules=Rules;',context);
+const R=context.rules;
+test('God mode can be toggled off and normal damage resumes',()=>{const s=R.fresh();R.toggle(s,'god',true);assert.equal(R.hurt(s,999),false);assert.equal(s.hp,100);R.toggle(s,'god',false);assert.equal(R.hurt(s,17),true);assert.equal(s.hp,83);R.hurt(s,999);assert.equal(s.hp,0);assert.equal(s.usedMods,true);});
+test('Unlimited money preserves wallet and upgrades when switched off',()=>{const s=R.fresh();s.money=52;R.toggle(s,'money',true);assert.equal(R.buy(s,'weapon').ok,true);assert.equal(s.money,52);assert.equal(s.weaponLevel,1);assert.equal(s.damage,36);R.toggle(s,'money',false);assert.equal(R.buy(s,'armor').ok,false);assert.equal(s.money,52);assert.equal(s.damage,36);});
+test('Normal purchases charge exactly once and limits do not charge',()=>{const s=R.fresh();s.money=1200;for(let i=0;i<3;i++)assert.equal(R.buy(s,'weapon').ok,true);assert.equal(s.money,600);assert.equal(R.buy(s,'weapon').ok,false);assert.equal(s.money,600);assert.equal(R.buy(s,'invalid').ok,false);assert.equal(s.money,600);});
+test('Healing and armor respect max HP',()=>{const s=R.fresh();s.money=1000;assert.equal(R.buy(s,'heal').ok,false);assert.equal(s.money,1000);R.hurt(s,60);assert.equal(R.buy(s,'armor').ok,true);assert.equal(s.hp,90);assert.equal(s.maxHp,130);assert.equal(R.buy(s,'heal').ok,true);assert.equal(s.hp,130);assert.equal(s.money,825);});
+test('New missions reset mods and wave counts increase',()=>{const s=R.fresh();R.toggle(s,'money',true);const fresh=R.fresh();assert.equal(fresh.mods.money,false);assert.equal(fresh.mods.god,false);assert.equal(fresh.usedMods,false);assert.equal(R.waveCount(1),8);assert.equal(R.waveCount(5),20);});
