@@ -1,32 +1,34 @@
-# Hasil verifikasi — 26 Oktober 2026
+# Verifikasi V2 — 26 Oktober 2026
 
-## Lulus
+## Aturan dan simulasi
 
-- 7 tes aturan dan simulasi melalui `node --test tests/*.test.mjs`.
-- Simulasi combat dengan God mode dan upgrade maksimum mencapai kemenangan: 5 gelombang, total 70 drone. Menembak, tabrakan proyektil, spawn, reward, dan pergantian gelombang memakai logika game sebenarnya; renderer dimock untuk simulasi ini.
-- Pemain diam tanpa mod dapat kalah; main ulang mereset HP, mod, upgrade, dan kemajuan.
-- God mode dapat dimatikan dan damage normal kembali berlaku.
-- Unlimited money tidak mengurangi saldo asli; menonaktifkannya tidak menghapus upgrade.
-- Batas upgrade, harga, pemulihan HP, dan penolakan pembelian tidak sah.
-- Pemeriksaan browser Chromium headless 153 dengan WebGL 2 melalui SwiftShader.
-- Resolusi mobile 844 × 390 dan 390 × 844. Menu mod portrait sempat melebar; sudah diperbaiki dan pemeriksaan ulang lulus.
-- Dua sentuhan simultan melalui Chrome DevTools Protocol: bergerak dengan joystick sambil menembak.
-- Membeli tiga upgrade senjata, jeda/lanjut, pengaturan grafik, kembali ke menu, serta misi baru.
-- Service worker aktif dan pemuatan ulang halaman saat jaringan offline berhasil.
-- Tidak ditemukan error JavaScript halaman pada tes browser.
+17 tes lulus lewat `node --test tests/*.test.mjs`:
+
+- God mode ON/OFF, damage shield sebelum HP, pembelian normal dan unlimited money, pemulihan HP, batas upgrade, serta penolakan tipe yang tidak valid.
+- XP beberapa level sekaligus, biaya dan batas perk, chip serta modul permanen, save rusak, dan loadout tidak valid.
+- Misi tanpa mod mendapat chip dan rekor per kesulitan; misi yang pernah menggunakan mod tidak mendapatkannya.
+- Simulasi combat sungguhan menyelesaikan 8 gelombang dan mengalahkan 2 boss; semua 5 kelas musuh serta fase kedua boss teramati. Simulasi memakai God mode, upgrade maksimum, gerak melingkar, pergantian senjata, dan EMP. Renderer dimock pada simulasi ini.
+- EMP memberi damage/stun, menghapus proyektil, dan menaati cooldown.
+- Kontrak inti data tidak memberi hadiah ganda; shield menunggu sebelum pulih; overheat membatasi tembakan.
+- Scatter mengeluarkan 5 proyektil dengan sudut berbeda; Rail menembus 3 target masing-masing sekali; sniper memberi peringatan sebelum menembak.
+- Pemain diam tanpa mod dapat kalah; misi baru mereset kemajuan.
+
+## Browser lokal
+
+Chromium headless 153, WebGL 2 melalui SwiftShader:
+
+- Startup renderer dan tidak ada error JavaScript halaman.
+- Persiapan misi: Rust Canyon, Nightmare, Rail; bonus HP hanggar diterapkan.
+- Berganti antara tiga senjata dan menggunakan EMP dengan tombol cooldown yang nonaktif sementara.
+- Gerak joystick dan tembak dengan dua sentuhan simultan melalui Chrome DevTools Protocol.
+- Memperoleh XP melalui combat nyata, membeli perk dari terminal, lalu melanjutkan pertempuran.
+- Mod, tiga upgrade senjata gratis, jeda/lanjut, pengaturan, akhir misi, dan mulai ulang.
+- Layout landscape 844 × 390, portrait 390 × 844, serta HP kecil 320 × 640; kontrol tetap di dalam layar dan panel dapat digulir.
+- Pembelian modul hanggar bertahan setelah reload, termasuk reload offline; cache `neon-outpost-v2` aktif.
+- Fixture browser khusus pengujian menampilkan Overlord fase 2 dengan renderer sebenarnya. Fixture tidak disertakan sebagai kontrol debug pada game produksi.
 
 ## Batas verifikasi
 
-Belum diuji pada HP fisik Android/iPhone. Tes browser dengan GPU perangkat lunak bukan tolok ukur FPS atau daya tahan baterai. Safari, pemasangan PWA lewat menu browser, dan distribusi APK belum diuji. Proyek ini bukan APK. Tidak ada klaim fotorealisme atau FPS tertentu.
+Belum diuji pada HP fisik, Safari, pemasangan PWA melalui menu browser, atau APK native. Pengujian GPU perangkat lunak bukan tolok ukur FPS atau penggunaan baterai. Simulasi kemenangan dengan mod tidak membuktikan keseimbangan semua kesulitan tanpa mod.
 
-## Ulangi pemeriksaan
-
-```sh
-node --test tests/*.test.mjs
-```
-
-Tes browser: jalankan server lokal sesuai README, lalu `node tests/browser.cjs`. Diperlukan Playwright dan Chromium. Variabel `CHROMIUM_PATH` opsional dapat menunjuk executable Chromium yang sudah ada. Tangkapan layar QA ditulis ke direktori temporer, bukan ke paket distribusi.
-
-## Publikasi GitHub Pages
-
-Repository `ferdiptr177/neon-outpost-mobile` telah diisi dengan 14 berkas proyek, dan seluruh SHA blob cocok dengan berkas lokal. GitHub Actions berhasil menerbitkan situs di https://ferdiptr177.github.io/neon-outpost-mobile/. Halaman publik berhasil dimuat. Browser pemeriksaan cloud tidak mendukung WebGL 2, sehingga pemeriksaan gameplay pada URL publik tidak dapat dilakukan di browser tersebut. Pemeriksaan renderer dan alur bermain sebelumnya dilakukan pada Chromium lokal dengan SwiftShader. Belum ada pengujian HP fisik.
+Browser cloud untuk administrasi GitHub sebelumnya tidak mendukung WebGL 2. Karena itu, pemeriksaan renderer menggunakan browser lokal; verifikasi publikasi memeriksa hasil deployment dan berkas yang tersaji, bukan klaim pengujian HP fisik.
